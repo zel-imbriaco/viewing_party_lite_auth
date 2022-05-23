@@ -9,6 +9,11 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of(:email) }
     it { should validate_presence_of(:password_digest)}
     it { should have_secure_password }
+    it 'does not keep the password column' do
+      user = User.create(name: 'Zel', email: 'zel@bell.com', password: 'test', password_confirmation: 'test')
+      expect(User.find(user.id).password).to eq nil
+      expect(user.password_digest).to_not eq 'test'
+    end
   end
 
   describe 'relationships' do
