@@ -9,6 +9,8 @@ RSpec.describe 'New User Page', type: :feature do
     within '#new-user-form' do
       fill_in :name,	with: 'Zel'
       fill_in :email, with: 'lorem@ipsum.dorum'
+      fill_in :password, with: 'test'
+      fill_in :password_confirmation, with: 'test'
       click_on :submit
     end
 
