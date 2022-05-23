@@ -22,7 +22,7 @@ RSpec.describe 'New User Page', type: :feature do
     before :each do
       visit '/users/new'
     end
-    it 'requires password and password_confirmation to be identical' do
+    it 'requires new user to enter a name' do
       within '#new-user-form' do
         fill_in :email, with: 'lorem@ipsum.dorum'
         fill_in :password, with: 'test'
@@ -31,7 +31,44 @@ RSpec.describe 'New User Page', type: :feature do
       end
 
       expect(current_path).to eq('/users/new')
-      expect(flash[:alert]).to be_present
+      expect(page).to have_content "Please enter your name."
+    end
+
+    it 'requires new users to enter email address' do
+      within '#new-user-form' do
+        fill_in :name, with: 'Zel'
+        fill_in :password, with: 'test'
+        fill_in :password_confirmation, with: 'test'
+        click_on :submit
+      end
+
+      expect(current_path).to eq("/users/new")
+      expect(page).to have_content "Please enter your desired email address."
+    end
+
+    it 'requires new users to enter a password' do
+      within '#new-user-form' do
+        fill_in :name, with: 'Zel'
+        fill_in :email, with: 'lorem@ipsum.dorum'
+        fill_in :password_confirmation, with: 'test'
+        click_on :submit
+      end
+      
+      expect(current_path).to eq("/users/new")
+      expect(page).to have_content "Please enter a password."
+    end
+
+    it 'confirms that the password and confirmation match' do
+      within '#new-user-form' do
+        fill_in :name, with: 'Zel'
+        fill_in :email, with: 'lorem@ipsum.dorum'
+        fill_in :password, with: 'thisisa'
+        fill_in :password_confirmation, with: 'test'
+        click_on :submit
+      end
+
+      expect(current_path).to eq("/users/new")
+      expect(page).to have_content "Your passwords must match."
     end
   end
 end
