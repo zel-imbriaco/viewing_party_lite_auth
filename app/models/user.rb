@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  validates_presence_of :name, :email
+  validates_presence_of :name, :email, :password_digest
   validates_uniqueness_of :email
+  has_secure_password
 
   has_many :attendees
   has_many :parties
