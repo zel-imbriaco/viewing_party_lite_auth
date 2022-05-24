@@ -28,20 +28,13 @@ RSpec.describe 'Landing/Welcome Page' do
       
     end 
 
-    it 'links to log out a user if logged in' do
-      visit login_path
-      fill_in :email, with: @skeeter.email
-      fill_in :password, with: @skeeter.password
-      click_on :submit    
+    it 'cannot see user list if not logged in' do
+      visit root_path
       
-      visit '/'
+      expect(page).to_not have_content("#existing_users")
+    end
 
-      expect(page).to have_link 'Log Out'
-      click_on 'Log Out'
-
-      expect(current_path).to eq '/'
-      expect(page).to have_link 'Login'
-    end    
+  
     it 'has a link to return back to the landing/welcome page' do #link will be present on every page of application
       
       visit "/"
