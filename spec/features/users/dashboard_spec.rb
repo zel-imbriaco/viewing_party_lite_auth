@@ -8,6 +8,11 @@ RSpec.describe 'User Dashboard', type: :feature do
     @user2 = User.create!(name: 'Alex', email: 'ipsum@lorem.com', password: 'Test')
   end
 
+  it 'Only allows authenticated users to access the page' do
+    visit dashboard_path
+    expect(current_path).to eq root_path
+  end
+
   it 'contains all expected attributes of the selected user' do
     visit login_path
     fill_in :email, with: @user1.email

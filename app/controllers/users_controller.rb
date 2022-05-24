@@ -2,17 +2,22 @@
 
 class UsersController < ApplicationController
   def show
-    @user = User.find(session[:user_id])
-    @parties = []
-    Party.all.each do |party|
-      party.attendees.each do |attendee|
-        if party.user_id == @user.id || attendee.user_id == @user.id
-          @parties << party
-        end
+    if !session[:user_id]
+      flash[:error] = "Please log in before accessing the dashboard."
+      redirect_to root_path
+    else
+      @user = User.find(session[:user_id])
+      @parties = []
+      Party.all.each do |party|
+        party.attendees.each do |attendee|
+          if party.user_id == @user.id || attendee.user_id == @user.id
+            @parties << party
+          end
+        end 
       end 
-    end 
-    movie_ids = @parties.map { |party| party.movie_id }
-    @movies = MovieFacade.multiple_movies(movie_ids)
+      movie_ids = @parties.map { |party| party.movie_id }
+      @movies = MovieFacade.multiple_movies(movie_ids)
+    end
   end
 
   def login; end
