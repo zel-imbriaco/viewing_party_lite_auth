@@ -15,7 +15,7 @@ RSpec.describe 'New User Page', type: :feature do
     end
 
     new_user = User.where(email: 'lorem@ipsum.dorum').first
-    expect(current_path).to eq("/users/#{new_user.id}")
+    expect(current_path).to eq(dashboard_path)
   end
 
   describe 'sad path' do

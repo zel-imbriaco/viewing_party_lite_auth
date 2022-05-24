@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    @user = User.find(session[:user_id])
     @parties = []
     Party.all.each do |party|
       party.attendees.each do |attendee|
@@ -14,6 +14,8 @@ class UsersController < ApplicationController
     movie_ids = @parties.map { |party| party.movie_id }
     @movies = MovieFacade.multiple_movies(movie_ids)
   end
+
+  def login; end
 
   def new; end
 
@@ -29,7 +31,8 @@ class UsersController < ApplicationController
     else
       User.create(new_user_params)
       @user = User.where(email: new_user_params[:email]).first
-      redirect_to "/users/#{@user.id}"
+      session[:user_id] = @user.id
+      redirect_to dashboard_path
     end
   end
     

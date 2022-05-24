@@ -26,7 +26,7 @@ class UserMoviePartiesController < ApplicationController
           Attendee.create(user_id: attendee, party_id: new_party.id)
         end 
       end 
-      redirect_to "/users/#{user_id}"
+      redirect_to dashboard_path
     end 
   end
 

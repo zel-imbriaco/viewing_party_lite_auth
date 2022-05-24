@@ -7,14 +7,6 @@
 </center>
 
 
-<section id="existing_users">
-<h3>Current Users</h3>
-  
-  <% @users.each do |user| %>
-    <section id="user_id-<%= user.id %>">
-    <%= link_to "#{user.email}'s dashboard", "/users/#{user.id}" %><br>
-    
-    </section>
-    <% end %>
+<%= link_to "Login", login_path %>
 
 </section>

@@ -9,7 +9,10 @@ RSpec.describe 'User Dashboard', type: :feature do
   end
 
   it 'contains all expected attributes of the selected user' do
-    visit "/users/#{@user1.id}"
+    visit login_path
+    fill_in :email, with: @user1.email
+    fill_in :password, with: @user1.password
+    click_on :submit
     
     within '#title' do
       expect(page).to have_content(@user1.name)
@@ -38,7 +41,10 @@ RSpec.describe 'User Dashboard', type: :feature do
       
       attendee1 = Attendee.create!(user_id: @user2.id, party_id: party1.id)
       attendee2 = Attendee.create!(user_id: @user2.id, party_id: party2.id)
-      visit "/users/#{@user2.id}"
+      visit login_path
+      fill_in :email, with: @user2.email
+      fill_in :password, with: @user2.password
+      click_on :submit
 
    
       within "#party_id-#{party1.id}" do 
@@ -75,8 +81,12 @@ RSpec.describe 'User Dashboard', type: :feature do
       attendee1 = Attendee.create!(user_id: @user2.id, party_id: party1.id)
       attendee2 = Attendee.create!(user_id: @user2.id, party_id: party2.id)
       attendee3 = Attendee.create!(user_id: @user1.id, party_id: party3.id)
-      visit "/users/#{@user1.id}"
-      
+
+      visit login_path
+      fill_in :email, with: @user1.email
+      fill_in :password, with: @user1.password
+      click_on :submit
+
       within "#party_id-#{party1.id}" do 
         expect(page).to have_content("Jaws")
         expect(page).to have_content('When: February 08, 2023')
@@ -108,8 +118,12 @@ RSpec.describe 'User Dashboard', type: :feature do
       
       attendee1 = Attendee.create!(user_id: @user2.id, party_id: party1.id)
       attendee2 = Attendee.create!(user_id: @user2.id, party_id: party2.id)
-      visit "/users/#{@user2.id}"
-      
+
+      visit login_path
+      fill_in :email, with: @user2.email
+      fill_in :password, with: @user2.password
+      click_on :submit
+
       within "#party_id-#{party1.id}" do 
         expect(page).to have_link("Jaws")
       end 

@@ -39,6 +39,11 @@ RSpec.describe "New Party Page" do
         lugnut = User.create!(name: 'LugNut', email: 'fatdog@corgi.com', password: 'test')
         hazel = User.create!(name: 'Hazel', email: 'hazelthehut@food.com', password: 'test')
         jaws_id = 578
+
+        visit login_path
+        fill_in :email, with: skeeter.email
+        fill_in :password, with: skeeter.password
+        click_on :submit    
         
         visit "/users/#{skeeter.id}/movies/#{jaws_id}/party/new"
         
@@ -52,11 +57,15 @@ RSpec.describe "New Party Page" do
         check("attendees_#{hazel.id}")
 
         click_on "Create Party"
-        expect(current_path).to eq("/users/#{skeeter.id}")
+        expect(current_path).to eq(dashboard_path)
         expect(page).to have_content("Jaws")
         expect(page).to have_content("When: May 12, 2022")
+
+        visit login_path
+        fill_in :email, with: lugnut.email
+        fill_in :password, with: lugnut.password
+        click_on :submit    
         
-        visit "/users/#{lugnut.id}"
         expect(page).to have_content("When: May 12, 2022")
         expect(page).to have_content("Jaws")
 

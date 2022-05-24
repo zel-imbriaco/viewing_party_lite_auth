@@ -6,8 +6,11 @@ RSpec.describe 'User Discovery Page', type: :feature do
 
     it 'the discover movies button takes me to the discover movies page' do
       skeeter = User.create!(name: 'Skeeter', email: 'skeeter@example.com', password: 'test')
+      visit login_path
+      fill_in :email, with: skeeter.email
+      fill_in :password, with: skeeter.password
+      click_on :submit
 
-      visit "/users/#{skeeter.id}"
       click_button "Discover Movies"
 
       expect(current_path).to eq("/users/#{skeeter.id}/discover")
@@ -15,15 +18,23 @@ RSpec.describe 'User Discovery Page', type: :feature do
 
     it 'has a Top Rated Movies button and a Search by Movie Title field' do
       skeeter = User.create!(name: 'Skeeter', email: 'skeeter@example.com', password: 'test')
-      visit "/users/#{skeeter.id}/discover"
-    
+      visit login_path
+      fill_in :email, with: skeeter.email
+      fill_in :password, with: skeeter.password
+      click_on :submit    
+      click_button "Discover Movies"
+
       expect(page).to have_button("Find Top Rated Movies")
       expect(page).to have_button("Find Movies")
     end 
 
     it 'clicking the Top Rated Movies button takes me to the movie results page' do
       skeeter = User.create!(name: 'Skeeter', email: 'skeeter@example.com', password: 'test')
-      visit "/users/#{skeeter.id}/discover"
+      visit login_path
+      fill_in :email, with: skeeter.email
+      fill_in :password, with: skeeter.password
+      click_on :submit    
+      click_button "Discover Movies"
 
       click_button "Find Top Rated Movies"
       
@@ -34,8 +45,12 @@ RSpec.describe 'User Discovery Page', type: :feature do
     end 
 
     it 'clicking the Find Movies button takes me to the movie results page' do
-      skeeter = User.create!(name: 'Skeeter', email: 'skeeter@example.com', password: 'test')
-      visit "/users/#{skeeter.id}/discover"
+      skeeter = User.create!(name: 'Skeeter', email: 'skeeter@example.com', password: "test")
+      visit login_path
+      fill_in :email, with: skeeter.email
+      fill_in :password, with: skeeter.password
+      click_on :submit    
+      click_button "Discover Movies"
 
       fill_in "Search by Movie Title", with: "Jaws"
       click_on "Find Movies"
