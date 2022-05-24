@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
   has_secure_password
 
-  enum role: %w(visitor user)
+  enum role: %w(user)
 
   has_many :attendees
   has_many :parties

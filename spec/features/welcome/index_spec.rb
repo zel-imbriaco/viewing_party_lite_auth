@@ -60,6 +60,16 @@ RSpec.describe 'Landing/Welcome Page' do
       click_on :submit    
     end
 
+    it 'shows a list of existing users' do
+
+      visit root_path
+
+      expect(page).to have_content(@skeeter.name)
+      expect(page).to have_content(@lugnut.name)
+      expect(page).to have_content(@hazel.name)
+      
+    end
+
     it 'links to log out a user if logged in' do
 
       visit root_path
@@ -71,4 +81,5 @@ RSpec.describe 'Landing/Welcome Page' do
       expect(page).to have_link 'Login'
     end    
   end
+
 end 

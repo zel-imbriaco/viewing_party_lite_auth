@@ -11,17 +11,15 @@
 <% end %>
 </center>
 
+<% if session[:user_id] %>
+  <% if User.find_by(id: session[:user_id]).user? %>
 
-
-<% if session[:user_id] && !User.find_by(id: session[:user_id]).visitor? %>
-<section id="existing_users">
-<h3>Current Users</h3>
-  
-  <% @users.each do |user| %>
-    <section id="user_id-<%= user.id %>">
-    <%= user.name %> <br>
-    
-    </section>
+    <h3>Current Users</h3>
+    <% @users.each do |user| %>
+      <section id="user_id-<%= user.id %>">
+      <h4><%= user.name %></h4> <br>
     <% end %>
+
+  <% end %>
 <% end %>
 </section>
