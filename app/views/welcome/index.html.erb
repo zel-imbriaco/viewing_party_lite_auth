@@ -3,10 +3,13 @@
 </center>
 
 <center>
-<%= button_to "Create a New User", "/users/new", method: :get %> 
-</center>
-
-
+<% if !session[:user_id] %>
+<%= button_to "Create a New User", new_user_path, method: :get %> 
 <%= link_to "Login", login_path %>
+<% else %>
+<%= link_to "Log Out", logout_path %>
+<% end %>
+
+</center>
 
 </section>

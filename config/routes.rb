@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'users#show'
   get '/login', to: 'users#login'
   post '/login', to: 'sessions#create'
+  get '/logout', to: 'users#logout'
   
   resources :users, only: [:new, :create]
 end

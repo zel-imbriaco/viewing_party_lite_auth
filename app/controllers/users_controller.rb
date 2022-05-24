@@ -17,6 +17,11 @@ class UsersController < ApplicationController
 
   def login; end
 
+  def logout
+    session.clear
+    redirect_to root_path
+  end
+
   def new; end
 
   def create

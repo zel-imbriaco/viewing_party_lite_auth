@@ -18,7 +18,7 @@ RSpec.describe 'Landing/Welcome Page' do
       expect(page).to have_link 'Login'
     end 
 
-    it 'links to the login form' do
+    it 'links to the login form if not logged in' do
       
       visit "/"
 
@@ -27,7 +27,21 @@ RSpec.describe 'Landing/Welcome Page' do
       expect(current_path).to eq login_path
       
     end 
-    
+
+    it 'links to log out a user if logged in' do
+      visit login_path
+      fill_in :email, with: @skeeter.email
+      fill_in :password, with: @skeeter.password
+      click_on :submit    
+      
+      visit '/'
+
+      expect(page).to have_link 'Log Out'
+      click_on 'Log Out'
+
+      expect(current_path).to eq '/'
+      expect(page).to have_link 'Login'
+    end    
     it 'has a link to return back to the landing/welcome page' do #link will be present on every page of application
       
       visit "/"
